@@ -9,11 +9,11 @@ public class Materiel {
     private ContratMaintenance unContrat;
 
     public String xmlMateriel() {
-        
+
         StringBuilder xmlBuilder = new StringBuilder();
         xmlBuilder.append("<materiel numSerie=\"").append(numSerie).append("\">\n");
         xmlBuilder.append("<type refInterne=\"").append(leType.getReferenceInterne()).append("\" libelle=\"").append(leType.getLibelleTypeMateriel()).append("\"/>\n");
-        xmlBuilder.append("<famille codeFamille=\"").append(leType.getLaFamille().codeFamille).append("\" libelle=\"").append(leType.getLaFamille().libelleFamille).append("\"/>\n");
+        xmlBuilder.append("<famille codeFamille=\"").append(leType.getLaFamille().getCodeFamille()).append("\" libelle=\"").append(leType.getLaFamille().getLibelleFamille()).append("\"/>\n");
         xmlBuilder.append("<date_vente>").append(dateVente).append("</date_vente>\n");
         xmlBuilder.append("<date_installation>").append(dateInstallation).append("</date_installation>\n");
         xmlBuilder.append("<prix_vente>").append(prixVente).append("</prix_vente>\n");
