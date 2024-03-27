@@ -6,8 +6,10 @@ public class Materiel {
     private double prixVente;
     private String emplacement;
     private TypeMateriel leType;
+    private ContratMaintenance unContrat;
 
     public String xmlMateriel() {
+        
         StringBuilder xmlBuilder = new StringBuilder();
         xmlBuilder.append("<materiel numSerie=\"").append(numSerie).append("\">\n");
         xmlBuilder.append("<type refInterne=\"").append(leType.getReferenceInterne()).append("\" libelle=\"").append(leType.getLibelleTypeMateriel()).append("\"/>\n");
