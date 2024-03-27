@@ -1,4 +1,6 @@
 import java.sql.Date;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -14,10 +16,26 @@ public ContratMaintenance(String numContrat, Date dateSignature, Date dateEchean
         this.lesMaterielsAssures = new ArrayList<>();
     }
     public int getJoursRestants() {
-        
+        // Conversion des dates SQL en LocalDate
+        LocalDate now = LocalDate.now();
+        LocalDate echeance = dateEcheance.toLocalDate();
+
+        // Calcul des jours restants jusqu'à l'échéance
+        long joursRestants = ChronoUnit.DAYS.between(now, echeance);
+
+        // Conversion en int et retour
+        return (int) joursRestants;
     }
     public boolean estValide() {
+        // Conversion des dates SQL en LocalDate
+        LocalDate now = LocalDate.now();
+        LocalDate signature = dateSignature.toLocalDate();
+        LocalDate echeance = dateEcheance.toLocalDate();
+    
+        // Vérifie si la date actuelle est après la date de signature et avant la date d'échéance
+        return now.isAfter(signature) && now.isBefore(echeance);
     }
+    
     public void ajouteMateriel(Materiel unMateriel) {
         lesMaterielsAssures.add(unMateriel);
     }
