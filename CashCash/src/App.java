@@ -1,7 +1,14 @@
+/**
+ * Classe principale de l'application.
+ */
 public class App {
-    public static void main(String[] args) throws Exception {
-        System.out.println("Hello, World!");
-        System.out.println("test");
+
+    /**
+     * Point d'entrée de l'application.
+     */
+    public static void main(String[] args) {
+        Authentificateur authentificateur = new Authentificateur();
+        authentificateur.authentifier();
     }
+
 }
-  
