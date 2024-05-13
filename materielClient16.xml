@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE listeMateriel SYSTEM "./materielClient.dtd">
+<listeMateriel>
+<materiels idClient="16">
+<sousContrat>
+<materiel numSerie="1">
+<type refInterne="1" libelle="A506 - Souris sans fil Logitech S" />
+<famille codeFamille="A" libelle="Souris" />
+<date_vente>Tue Jan 10 00:00:00 CET 2023</date_vente>
+<date_installation>Sun Jan 15 00:00:00 CET 2023</date_installation>
+<prix_vente>150.0</prix_vente>
+<emplacement>Bureau A101</emplacement>
+<date_echeance_contrat>Sun Dec 31 00:00:00 CET 2023</date_echeance_contrat>
+</materiel>
+<materiel numSerie="7">
+<type refInterne="2" libelle="B302 - Ecran tactile 15 pouces" />
+<famille codeFamille="B" libelle="Ecran" />
+<date_vente>Mon Jul 10 00:00:00 CEST 2023</date_vente>
+<date_installation>Sat Jul 15 00:00:00 CEST 2023</date_installation>
+<prix_vente>120.0</prix_vente>
+<emplacement>Bureau A102</emplacement>
+<date_echeance_contrat>Sun Dec 31 00:00:00 CET 2023</date_echeance_contrat>
+</materiel>
+</sousContrat>
+<horsContrat>
+<materiel numSerie="21">
+<type refInterne="3" libelle="C104 - Imprimante thermique" />
+<famille codeFamille="C" libelle="Imprimante" />
+<date_vente>Sun Feb 25 00:00:00 CET 2024</date_vente>
+<date_installation>Wed Mar 20 00:00:00 CET 2024</date_installation>
+<prix_vente>210.0</prix_vente>
+<emplacement>Bureau B105</emplacement>
+</materiel>
+</horsContrat>
+</materiels>
+</listeMateriel>

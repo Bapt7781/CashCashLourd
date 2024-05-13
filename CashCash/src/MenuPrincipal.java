@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.IOException;
 
 // Cette classe affiche le menu principal après une authentification réussie
 public class MenuPrincipal extends JPanel {
@@ -39,8 +40,11 @@ public class MenuPrincipal extends JPanel {
 
         fichierXMLBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(null, "Fichier XML client généré.", "Succès",
-                        JOptionPane.INFORMATION_MESSAGE);
+                try {
+                    new Materiel();
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
             }
         });
 

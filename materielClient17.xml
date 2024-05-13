@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE listeMateriel SYSTEM "./materielClient.dtd">
+<listeMateriel>
+<materiels idClient="17">
+<sousContrat>
+<materiel numSerie="4">
+<type refInterne="4" libelle="D209 - Terminal de paiement mobile" />
+<famille codeFamille="D" libelle="Terminal" />
+<date_vente>Tue Apr 25 00:00:00 CEST 2023</date_vente>
+<date_installation>Sun Apr 30 00:00:00 CEST 2023</date_installation>
+<prix_vente>100.0</prix_vente>
+<emplacement>Bureau D104</emplacement>
+<date_echeance_contrat>Sun Dec 31 00:00:00 CET 2023</date_echeance_contrat>
+</materiel>
+<materiel numSerie="10">
+<type refInterne="1" libelle="A506 - Souris sans fil Logitech S" />
+<famille codeFamille="A" libelle="Souris" />
+<date_vente>Wed Oct 25 00:00:00 CEST 2023</date_vente>
+<date_installation>Mon Oct 30 00:00:00 CET 2023</date_installation>
+<prix_vente>90.0</prix_vente>
+<emplacement>Bureau D105</emplacement>
+<date_echeance_contrat>Sun Dec 31 00:00:00 CET 2023</date_echeance_contrat>
+</materiel>
+</sousContrat>
+<horsContrat>
+</horsContrat>
+</materiels>
+</listeMateriel>

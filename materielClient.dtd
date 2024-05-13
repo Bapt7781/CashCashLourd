@@ -1,0 +1,14 @@
+<!ELEMENT listeMateriel (materiels)>
+<!ELEMENT materiels (sousContrat?, horsContrat?)>
+<!ELEMENT sousContrat (materiel+)>
+<!ELEMENT horsContrat (materiel+)>
+<!ATTLIST materiel numSerie CDATA #REQUIRED>
+<!ATTLIST type refInterne CDATA #REQUIRED
+                libelle CDATA #REQUIRED>
+<!ATTLIST famille codeFamille CDATA #REQUIRED
+                   libelle CDATA #REQUIRED>
+<!ELEMENT date_vente (#PCDATA)>
+<!ELEMENT date_installation (#PCDATA)>
+<!ELEMENT prix_vente (#PCDATA)>
+<!ELEMENT emplacement (#PCDATA)>
+<!ELEMENT date_echeance_contrat (#PCDATA)>
