@@ -1,6 +1,3 @@
-import org.quartz.*;
-import org.quartz.impl.StdSchedulerFactory;
-
 import java.sql.*;
 import java.util.Date;
 
@@ -45,28 +42,5 @@ public class GenerateurPDF {
         } catch (SQLException | InterruptedException e) {
             e.printStackTrace();
         }
-    }
-
-    public static void main(String[] args) throws SchedulerException {
-        // Créer une instance du planificateur de tâches
-        Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
-
-        // Démarer le planificateur
-        scheduler.start();
-
-        // Définir la tâche planifiée pour s'exécuter tous les jours à minuit
-        JobDetail job = JobBuilder.newJob()
-                .ofType(GenerateurPDF.class)
-                .withIdentity("generateurPDFJob", "group1")
-                .build();
-
-        Trigger trigger = TriggerBuilder.newTrigger()
-                .withIdentity("trigger1", "group1")
-                .startNow()
-                .withSchedule(CronScheduleBuilder.dailyAtHourAndMinute(0, 0))
-                .build();
-
-        // Ajouter la tâche planifiée au planificateur
-        scheduler.scheduleJob(job, trigger);
     }
 }
