@@ -2,7 +2,6 @@ import java.sql.Date;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
-import java.util.Collection;
 
 public class ContratMaintenance {
     private String numContrat;
@@ -14,6 +13,9 @@ public class ContratMaintenance {
         this.dateSignature = dateSignature;
         this.dateEcheance = dateEcheance;
         this.lesMaterielsAssures = new ArrayList<>();
+    }
+
+    public ContratMaintenance() {
     }
 
     public boolean contientMateriel(Materiel materiel) {
@@ -44,7 +46,19 @@ public class ContratMaintenance {
     }
 
     public void ajouteMateriel(Materiel unMateriel) {
-        lesMaterielsAssures.add(unMateriel);
+        // Vérifier si la date de signature du contrat est antérieure ou égale à la date
+        // d'installation du matériel
+        if (dateSignature.compareTo(unMateriel.getDateInstallation()) <= 0) {
+            // Ajouter unMatériel à la collection lesMaterielsAssures
+            lesMaterielsAssures.add(unMateriel);
+
+            // Mettre à jour la ligne correspondante dans la table materiel de la base de
+            // données
+            PersistanceSQL persistanceSQL = new PersistanceSQL("localhost", 3306, "cashcash");
+            persistanceSQL.ajouterNumeroContratAuMateriel(this.numContrat, unMateriel.getNumSerie());
+        } else {
+            System.out.println("La date de signature du contrat est postérieure à la date d'installation du matériel.");
+        }
     }
 
     // Méthode pour obtenir le numéro de contrat
@@ -63,7 +77,24 @@ public class ContratMaintenance {
     }
 
     // Méthode pour obtenir les matériels assurés
-    public Collection<Materiel> getLesMaterielsAssures() {
+    public ArrayList<Materiel> getLesMaterielsAssures() {
         return lesMaterielsAssures;
     }
+
+    public void setNumContrat(String numContrat) {
+        this.numContrat = numContrat;
+    }
+
+    public void setDateSignature(Date dateSignature) {
+        this.dateSignature = dateSignature;
+    }
+
+    public void setDateEcheance(Date dateEcheance) {
+        this.dateEcheance = dateEcheance;
+    }
+
+    public void setLesMaterielsAssures(ArrayList<Materiel> lesMaterielsAssures) {
+        this.lesMaterielsAssures = lesMaterielsAssures;
+    }
+
 }

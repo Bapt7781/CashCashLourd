@@ -18,12 +18,13 @@ public class Materiel {
     private double prixVente;
     private String emplacement;
     private TypeMateriel leType;
-    
+
     private static final String URL = "jdbc:mysql://localhost/cashcash?useUnicode=true&characterEncoding=UTF-8";
     private static final String UTILISATEUR = "root";
     private static final String MOT_DE_PASSE = "";
 
-    public Materiel(int numSerie, Date dateVente, Date dateInstallation, Date dateEcheanceContrat, double prixVente, String emplacement, TypeMateriel leType) {
+    public Materiel(int numSerie, Date dateVente, Date dateInstallation, Date dateEcheanceContrat, double prixVente,
+            String emplacement, TypeMateriel leType) {
         this.numSerie = numSerie;
         this.dateVente = dateVente;
         this.dateInstallation = dateInstallation;
@@ -35,6 +36,10 @@ public class Materiel {
 
     public Materiel() throws IOException {
         xmlMateriel();
+    }
+
+    public Materiel(int numSeriee) {
+        this.numSerie = numSeriee;
     }
 
     // Getters
@@ -79,6 +84,10 @@ public class Materiel {
         this.dateInstallation = dateInstallation;
     }
 
+    public void setDateEcheanceContrat(Date dateEcheanceContrat) {
+        this.dateEcheanceContrat = dateEcheanceContrat;
+    }
+
     public void setPrixVente(double prixVente) {
         this.prixVente = prixVente;
     }
@@ -105,9 +114,9 @@ public class Materiel {
         // Création de la connexion à la base de données
         try (Connection connection = DriverManager.getConnection(URL, UTILISATEUR, MOT_DE_PASSE);
                 PreparedStatement preparedStatement = connection.prepareStatement(requeteSQL)) {
-            
+
             preparedStatement.setString(1, numClient);
-            
+
             TypeMateriel typeMateriel = null; // Déclaration de typeMateriel en dehors de la portée des blocs try/catch
             Date dateEcheance = null;
             // Exécution de la requête et récupération des résultats
@@ -132,7 +141,7 @@ public class Materiel {
                                 dateEcheance = dateFormat.parse(DateEcheance);
                             }
                         }
-                    } 
+                    }
                     String bdRefInterne = resultSet.getString("ReferenceInterne");
                     String requeteSQL3 = "SELECT * FROM typeMateriel WHERE ReferenceInterne = ?";
                     try (PreparedStatement preparedStatement3 = connection.prepareStatement(requeteSQL3)) {
@@ -158,12 +167,13 @@ public class Materiel {
                             }
                         }
                     }
-                    Materiel materiel = new Materiel(Integer.parseInt(BdNumSerie), dateFormat.parse(bdDateVente), dateFormat.parse(bdDateInstallation), dateEcheance, Double.parseDouble(bdPrixVente), bdEmplacement, typeMateriel);                 
+                    Materiel materiel = new Materiel(Integer.parseInt(BdNumSerie), dateFormat.parse(bdDateVente),
+                            dateFormat.parse(bdDateInstallation), dateEcheance, Double.parseDouble(bdPrixVente),
+                            bdEmplacement, typeMateriel);
                     String bdContrat = resultSet.getString("NumeroDeContrat");
-                    if (bdContrat != null){
+                    if (bdContrat != null) {
                         listeMaterielsSousContrat.add(materiel);
-                    }
-                    else {
+                    } else {
                         listeMaterielsHorsContrat.add(materiel);
                     }
                 }
@@ -193,29 +203,33 @@ public class Materiel {
         f.ecrire("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
         f.ecrire("<!DOCTYPE listeMateriel SYSTEM \"./materielClient.dtd\">");
         f.ecrire("<listeMateriel>");
-        f.ecrire("<materiels idClient=\""+ numClient + "\">");
+        f.ecrire("<materiels idClient=\"" + numClient + "\">");
         f.ecrire("<sousContrat>");
         for (Materiel materiel : listeMaterielsSousContrat) {
-            f.ecrire("<materiel numSerie=\""+ materiel.numSerie + "\">");
-            f.ecrire("<type refInterne=\""+ materiel.leType.getReferenceInterne() + "\" libelle=\"" + materiel.leType.getLibelleTypeMateriel() + "\" />");
-            f.ecrire("<famille codeFamille=\"" + materiel.leType.getLaFamille().getCodeFamille() + "\" libelle=\""+ materiel.leType.getLaFamille().getLibelleFamille() + "\" />");
-            f.ecrire("<date_vente>"+ materiel.dateVente + "</date_vente>");
+            f.ecrire("<materiel numSerie=\"" + materiel.numSerie + "\">");
+            f.ecrire("<type refInterne=\"" + materiel.leType.getReferenceInterne() + "\" libelle=\""
+                    + materiel.leType.getLibelleTypeMateriel() + "\" />");
+            f.ecrire("<famille codeFamille=\"" + materiel.leType.getLaFamille().getCodeFamille() + "\" libelle=\""
+                    + materiel.leType.getLaFamille().getLibelleFamille() + "\" />");
+            f.ecrire("<date_vente>" + materiel.dateVente + "</date_vente>");
             f.ecrire("<date_installation>" + materiel.dateInstallation + "</date_installation>");
-            f.ecrire("<prix_vente>"+ materiel.prixVente + "</prix_vente>");
-            f.ecrire("<emplacement>"+ materiel.emplacement + "</emplacement>");
+            f.ecrire("<prix_vente>" + materiel.prixVente + "</prix_vente>");
+            f.ecrire("<emplacement>" + materiel.emplacement + "</emplacement>");
             f.ecrire("<date_echeance_contrat>" + materiel.dateEcheanceContrat + "</date_echeance_contrat>");
             f.ecrire("</materiel>");
         }
         f.ecrire("</sousContrat>");
         f.ecrire("<horsContrat>");
         for (Materiel materiel : listeMaterielsHorsContrat) {
-            f.ecrire("<materiel numSerie=\""+ materiel.numSerie + "\">");
-            f.ecrire("<type refInterne=\""+ materiel.leType.getReferenceInterne() + "\" libelle=\"" + materiel.leType.getLibelleTypeMateriel() + "\" />");
-            f.ecrire("<famille codeFamille=\"" + materiel.leType.getLaFamille().getCodeFamille() + "\" libelle=\""+ materiel.leType.getLaFamille().getLibelleFamille() + "\" />");
-            f.ecrire("<date_vente>"+ materiel.dateVente + "</date_vente>");
+            f.ecrire("<materiel numSerie=\"" + materiel.numSerie + "\">");
+            f.ecrire("<type refInterne=\"" + materiel.leType.getReferenceInterne() + "\" libelle=\""
+                    + materiel.leType.getLibelleTypeMateriel() + "\" />");
+            f.ecrire("<famille codeFamille=\"" + materiel.leType.getLaFamille().getCodeFamille() + "\" libelle=\""
+                    + materiel.leType.getLaFamille().getLibelleFamille() + "\" />");
+            f.ecrire("<date_vente>" + materiel.dateVente + "</date_vente>");
             f.ecrire("<date_installation>" + materiel.dateInstallation + "</date_installation>");
-            f.ecrire("<prix_vente>"+ materiel.prixVente + "</prix_vente>");
-            f.ecrire("<emplacement>"+ materiel.emplacement + "</emplacement>");
+            f.ecrire("<prix_vente>" + materiel.prixVente + "</prix_vente>");
+            f.ecrire("<emplacement>" + materiel.emplacement + "</emplacement>");
             f.ecrire("</materiel>");
         }
         f.ecrire("</horsContrat>");
@@ -224,13 +238,12 @@ public class Materiel {
         f.fermer();
 
         boolean valide = validerXmlAvecDtd(nomFichier, "materielClient.dtd");
-        if(valide){
+        if (valide) {
             JOptionPane.showMessageDialog(null, "Fichier XML client généré et respecte la dtd", "Succès",
-                        JOptionPane.INFORMATION_MESSAGE);
-        }
-        else {
+                    JOptionPane.INFORMATION_MESSAGE);
+        } else {
             JOptionPane.showMessageDialog(null, "Fichier XML client généré mais ne respecte pas la dtd", "Echec",
-                        JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.INFORMATION_MESSAGE);
         }
     }
 

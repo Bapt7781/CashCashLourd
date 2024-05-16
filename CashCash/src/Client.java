@@ -31,6 +31,10 @@ public class Client {
         this.leContrat = leContrat;
     }
 
+    // surcharge
+    public Client() {
+    }
+
     // Getters pour les attributs
     public String getNumClient() {
         return numClient;
@@ -68,9 +72,56 @@ public class Client {
         return distanceKm;
     }
 
-    // Getter pour la collection de matériels
     public ArrayList<Materiel> getMateriels() {
         return lesMateriels;
+    }
+
+    public ContratMaintenance getLeContrat() {
+        return leContrat;
+    }
+
+    public void setNumClient(String numClient) {
+        this.numClient = numClient;
+    }
+
+    public void setRaisonSociale(String raisonSociale) {
+        this.raisonSociale = raisonSociale;
+    }
+
+    public void setSiren(String siren) {
+        this.siren = siren;
+    }
+
+    public void setCodeApe(String codeApe) {
+        this.codeApe = codeApe;
+    }
+
+    public void setAdresse(String adresse) {
+        this.adresse = adresse;
+    }
+
+    public void setTelClient(String telClient) {
+        this.telClient = telClient;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setDureeDeplacement(int dureeDeplacement) {
+        this.dureeDeplacement = dureeDeplacement;
+    }
+
+    public void setDistanceKm(int distanceKm) {
+        this.distanceKm = distanceKm;
+    }
+
+    public void setLesMateriels(ArrayList<Materiel> lesMateriels) {
+        this.lesMateriels = lesMateriels;
+    }
+
+    public void setLeContrat(ContratMaintenance leContrat) {
+        this.leContrat = leContrat;
     }
 
     // Méthode pour obtenir les matériels sous contrat
