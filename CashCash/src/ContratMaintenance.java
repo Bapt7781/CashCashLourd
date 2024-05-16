@@ -5,16 +5,21 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 public class ContratMaintenance {
-private String numContrat;
-private Date dateSignature, dateEcheance;
-private ArrayList<Materiel> lesMaterielsAssures = new ArrayList<>();
+    private String numContrat;
+    private Date dateSignature, dateEcheance;
+    private ArrayList<Materiel> lesMaterielsAssures = new ArrayList<>();
 
-public ContratMaintenance(String numContrat, Date dateSignature, Date dateEcheance) {
+    public ContratMaintenance(String numContrat, Date dateSignature, Date dateEcheance) {
         this.numContrat = numContrat;
         this.dateSignature = dateSignature;
         this.dateEcheance = dateEcheance;
         this.lesMaterielsAssures = new ArrayList<>();
     }
+
+    public boolean contientMateriel(Materiel materiel) {
+        return lesMaterielsAssures.contains(materiel);
+    }
+
     public int getJoursRestants() {
         // Conversion des dates SQL en LocalDate
         LocalDate now = LocalDate.now();
@@ -26,16 +31,18 @@ public ContratMaintenance(String numContrat, Date dateSignature, Date dateEchean
         // Conversion en int et retour
         return (int) joursRestants;
     }
+
     public boolean estValide() {
         // Conversion des dates SQL en LocalDate
         LocalDate now = LocalDate.now();
         LocalDate signature = dateSignature.toLocalDate();
         LocalDate echeance = dateEcheance.toLocalDate();
-    
-        // Vérifie si la date actuelle est après la date de signature et avant la date d'échéance
+
+        // Vérifie si la date actuelle est après la date de signature et avant la date
+        // d'échéance
         return now.isAfter(signature) && now.isBefore(echeance);
     }
-    
+
     public void ajouteMateriel(Materiel unMateriel) {
         lesMaterielsAssures.add(unMateriel);
     }
