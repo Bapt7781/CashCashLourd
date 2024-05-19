@@ -275,7 +275,8 @@ public class PersistanceSQL {
                     // Début du texte
                     contentStream.beginText();
                     // Choisir la police et la taille
-                    contentStream.setFont(new PDType1Font(Standard14Fonts.FontName.HELVETICA), 12);
+                    PDType1Font HELVETICA = new PDType1Font(Standard14Fonts.FontName.HELVETICA);
+                    contentStream.setFont(HELVETICA, 12);
                     // Déplacer le curseur à une position x, y
                     contentStream.newLineAtOffset(100, 700);
                     // Ajouter du texte
