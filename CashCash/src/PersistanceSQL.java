@@ -251,7 +251,6 @@ public class PersistanceSQL {
                     client.setNumClient(resultSet.getString("NumeroClient"));
                     client.setRaisonSociale(resultSet.getString("RaisonSociale"));
                     client.setEmail(resultSet.getString("Email"));
-                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
                     client.setDateEcheance(resultSet.getDate("DateEcheance"));
                     clients.add(client);
                 }
