@@ -1,3 +1,4 @@
+import java.sql.Date;
 import java.util.ArrayList;
 
 public class Client {
@@ -13,6 +14,7 @@ public class Client {
     private int distanceKm;
     private ArrayList<Materiel> lesMateriels;
     private ContratMaintenance leContrat;
+    private String dateEcheance;
 
     // Constructeur
     public Client(String numClient, String raisonSociale, String siren, String codeApe, String adresse,
@@ -124,6 +126,10 @@ public class Client {
         this.leContrat = leContrat;
     }
 
+    public String getDateEcheance() {
+        return dateEcheance;
+    }
+
     // Méthode pour obtenir les matériels sous contrat
     public ArrayList<Materiel> getMaterielsSousContrat() {
         ArrayList<Materiel> materielsSousContrat = new ArrayList<>();
@@ -140,5 +146,10 @@ public class Client {
     // Méthode pour vérifier si le client est assuré
     public boolean estAssure() {
         return leContrat != null && leContrat.estValide();
+    }
+
+    public void setDateEcheance(Date date) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'setDateEcheance'");
     }
 }

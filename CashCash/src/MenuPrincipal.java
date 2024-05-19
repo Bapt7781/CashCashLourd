@@ -60,16 +60,18 @@ public class MenuPrincipal extends JPanel {
         });
 
         
-        contratMaintenanceBtn.addActionListener(new ActionListener() {
+        courriersBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 PersistanceSQL persistanceSQL = new PersistanceSQL("localhost", 3306, "cashcash");
                 SwingUtilities.invokeLater(new Runnable() {
                     public void run() {
-                        new InterfaceMail(persistanceSQL);
+                        InterfaceMail.afficherInterface(persistanceSQL);
                     }
                 });
             }
         });
+        
+        
     }
     
     

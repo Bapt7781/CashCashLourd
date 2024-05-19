@@ -226,5 +226,30 @@ public class PersistanceSQL {
             e.printStackTrace();
         }
     }
+    public ArrayList<Client> recupererClientsPourRelance(int jours) {
+        ArrayList<Client> clients = new ArrayList<>();
+        String requeteSQL = "SELECT client.NumeroClient, client.RaisonSociale, client.Email, contratdemaintenance.DateEcheance " +
+                            "FROM client " +
+                            "JOIN contratdemaintenance ON client.NumeroClient = contratdemaintenance.NumeroClient " +
+                            "WHERE contratdemaintenance.DateEcheance = DATE_ADD(CURDATE(), INTERVAL ? DAY)";
 
+        try (Connection connexion = DriverManager.getConnection(URL, "root", "");
+                PreparedStatement statement = connexion.prepareStatement(requeteSQL)) {
+            statement.setInt(1, jours);
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    Client client = new Client();
+                    client.setNumClient(resultSet.getString("NumeroClient"));
+                    client.setRaisonSociale(resultSet.getString("RaisonSociale"));
+                    client.setEmail(resultSet.getString("Email"));
+                    client.setDateEcheance(resultSet.getDate("DateEcheance"));
+                    clients.add(client);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return clients;
+    }
 }

@@ -1,64 +1,93 @@
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
 
 public class InterfaceMail extends JPanel {
-    // Constructeur
-    public InterfaceMail() {
-        // Utilisation d'un BorderLayout
+    private PersistanceSQL persistanceSQL;
+    private JTextArea contenuArea;
+
+    public InterfaceMail(PersistanceSQL persistanceSQL) {
+        this.persistanceSQL = persistanceSQL;
+
         setLayout(new BorderLayout());
 
-        // Panneau pour les boutons
-        JPanel boutonsPanel = new JPanel(new GridLayout(3, 1, 10, 10));
-        boutonsPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        // Menu avec les boutons
+        JPanel menuPanel = new JPanel();
+        menuPanel.setLayout(new GridLayout(1, 3));
 
-        // Création des boutons avec leurs textes
-        JButton bouton1 = new JButton("30 jours");
-        JButton bouton2 = new JButton("15 jours");
-        JButton bouton3 = new JButton("3 jours");
+        JButton button30Days = new JButton("30 jours");
+        JButton button15Days = new JButton("15 jours");
+        JButton button3Days = new JButton("3 jours");
 
-        // Ajout des boutons au panneau
-        boutonsPanel.add(bouton1);
-        boutonsPanel.add(bouton2);
-        boutonsPanel.add(bouton3);
+        menuPanel.add(button30Days);
+        menuPanel.add(button15Days);
+        menuPanel.add(button3Days);
 
-        // Ajout du panneau des boutons au centre du layout
-        add(boutonsPanel, BorderLayout.CENTER);
+        add(menuPanel, BorderLayout.NORTH);
 
-        // Gestion des actions des boutons
-        bouton1.addActionListener(new ActionListener() {
+        contenuArea = new JTextArea();
+        contenuArea.setLineWrap(true);
+        contenuArea.setWrapStyleWord(true);
+        JScrollPane scrollPane = new JScrollPane(contenuArea);
+        add(scrollPane, BorderLayout.CENTER);
+
+        button30Days.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(null, "Action du Bouton 1.", "Message",
-                        JOptionPane.INFORMATION_MESSAGE);
+                int nbjour = 30;
+                ArrayList<Client> TousClient = persistanceSQL.recupererClientsPourRelance(nbjour);
+                for(Client unClient : TousClient){
+
+                }
             }
         });
 
-        bouton2.addActionListener(new ActionListener() {
+        button15Days.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(null, "Action du Bouton 2.", "Message",
-                        JOptionPane.INFORMATION_MESSAGE);
+                int nbjour = 15;
+                ArrayList<Client> TousClient = persistanceSQL.recupererClientsPourRelance(nbjour);
+                for(Client unClient : TousClient){
+                    
+                }
             }
         });
 
-        bouton3.addActionListener(new ActionListener() {
+        button3Days.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(null, "Action du Bouton 3.", "Message",
-                        JOptionPane.INFORMATION_MESSAGE);
+                int nbjour = 3;
+                ArrayList<Client> TousClient = persistanceSQL.recupererClientsPourRelance(nbjour);
+                for(Client unClient : TousClient){
+                    
+                }
             }
         });
+    }
+
+    private void afficherClients(int jours) {
+        ArrayList<Client> clients = persistanceSQL.recupererClientsPourRelance(jours);
+        StringBuilder contenu = new StringBuilder();
+        for (Client client : clients) {
+            contenu.append("Numéro Client: ").append(client.getNumClient())
+                    .append("\nRaison Sociale: ").append(client.getRaisonSociale())
+                    .append("\nEmail: ").append(client.getEmail())
+                    .append("\nDate d'échéance: ").append(client.getDateEcheance())
+                    .append("\n\n");
+        }
+        contenuArea.setText(contenu.toString());
     }
 
     /**
      * Méthode statique pour afficher l'interface graphique.
      */
-    public static void afficherInterface() {
+    public static void afficherInterface(PersistanceSQL persistanceSQL) {
         // Création de la fenêtre
-        JFrame frame = new JFrame("Interface ");
+        JFrame frame = new JFrame("Interface d'affichage des clients");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(400, 300);
-        frame.setContentPane(new InterfaceMail());
+        frame.setSize(600, 400);
+        frame.setContentPane(new InterfaceMail(persistanceSQL));
         frame.setVisible(true);
     }
 }
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
