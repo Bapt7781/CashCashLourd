@@ -3,6 +3,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
@@ -251,6 +252,7 @@ public class PersistanceSQL {
                     client.setNumClient(resultSet.getString("NumeroClient"));
                     client.setRaisonSociale(resultSet.getString("RaisonSociale"));
                     client.setEmail(resultSet.getString("Email"));
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
                     client.setDateEcheance(resultSet.getDate("DateEcheance"));
                     clients.add(client);
                 }
@@ -261,7 +263,7 @@ public class PersistanceSQL {
         return clients;
     }
 
-    public void generationPDF(){ 
+    public void generationPDF30jours(){ 
         int nbjour = 30;
         ArrayList<Client> TousClient = recupererClientsPourRelance(nbjour);
         for(Client unClient : TousClient){
@@ -275,11 +277,12 @@ public class PersistanceSQL {
                     // Début du texte
                     contentStream.beginText();
                     // Choisir la police et la taille
-                    contentStream.setFont(new PDType1Font(Standard14Fonts.FontName.HELVETICA), 12);
+                    PDType1Font HELVETICA = new PDType1Font(Standard14Fonts.FontName.HELVETICA);
+                    contentStream.setFont(HELVETICA,12);
                     // Déplacer le curseur à une position x, y
                     contentStream.newLineAtOffset(100, 700);
                     // Ajouter du texte
-                    contentStream.showText("Hello, World!");
+                    contentStream.showText("Boujour " + unClient.getRaisonSociale()+ " Nous vous rapellons que votre contrat de maintenance arrive a échéance à la date du: " + unClient.getDateEcheance()+ " Merci de revenir vers nous pour renouveler votre contrat. Cordialement votre équipe d'assistance CashCash.");
                     // Fin du texte
                     contentStream.endText();
                 }

@@ -1,5 +1,5 @@
-import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Client {
     // Attributs privés
@@ -14,7 +14,7 @@ public class Client {
     private int distanceKm;
     private ArrayList<Materiel> lesMateriels;
     private ContratMaintenance leContrat;
-    private String dateEcheance;
+    private Date dateEcheance;
 
     // Constructeur
     public Client(String numClient, String raisonSociale, String siren, String codeApe, String adresse,
@@ -126,7 +126,7 @@ public class Client {
         this.leContrat = leContrat;
     }
 
-    public String getDateEcheance() {
+    public Date getDateEcheance() {
         return dateEcheance;
     }
 
@@ -149,7 +149,6 @@ public class Client {
     }
 
     public void setDateEcheance(Date date) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setDateEcheance'");
+        this.dateEcheance = date;
     }
 }

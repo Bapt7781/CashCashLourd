@@ -61,16 +61,16 @@ public class MenuPrincipal extends JPanel {
 
         
         courriersBtn.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                PersistanceSQL persistanceSQL = new PersistanceSQL("localhost", 3306, "cashcash");
-                SwingUtilities.invokeLater(new Runnable() {
-                    public void run() {
-                        InterfaceMail.afficherInterface(persistanceSQL);
-                    }
-                });
+    public void actionPerformed(ActionEvent e) {
+        PersistanceSQL persistanceSQL = new PersistanceSQL("localhost", 3306, "cashcash");
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                InterfaceMail.afficherInterface(persistanceSQL);
             }
         });
-        
+    }
+});
+
         
     }
     
