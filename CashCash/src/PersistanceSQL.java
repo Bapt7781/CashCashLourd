@@ -4,6 +4,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.PDPage;
+import org.apache.pdfbox.pdmodel.PDPageContentStream;
+import org.apache.pdfbox.pdmodel.font.PDType1Font;
+import org.apache.pdfbox.pdmodel.font.Standard14Fonts;
 
 import com.mysql.jdbc.Statement;
 
@@ -251,5 +256,37 @@ public class PersistanceSQL {
             e.printStackTrace();
         }
         return clients;
+    }
+
+    public void generationPDF(){ 
+        int nbjour = 30;
+        ArrayList<Client> TousClient = recupererClientsPourRelance(nbjour);
+        for(Client unClient : TousClient){
+            String dest = unClient.getRaisonSociale() + "Rappel30Jours.pdf";
+            try (PDDocument document = new PDDocument()) {
+                PDPage page = new PDPage();
+                document.addPage(page);
+                
+                // Création d'un flux de contenu pour la page
+                try (PDPageContentStream contentStream = new PDPageContentStream(document, page)) {
+                    // Début du texte
+                    contentStream.beginText();
+                    // Choisir la police et la taille
+                    contentStream.setFont(new PDType1Font(Standard14Fonts.FontName.HELVETICA), 12);
+                    // Déplacer le curseur à une position x, y
+                    contentStream.newLineAtOffset(100, 700);
+                    // Ajouter du texte
+                    contentStream.showText("Hello, World!");
+                    // Fin du texte
+                    contentStream.endText();
+                }
+                
+                // Sauvegarder le document en tant que fichier PDF
+                document.save(dest);
+                System.out.println("PDF créé à l'emplacement : " + dest);
+            }catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
