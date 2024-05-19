@@ -12,7 +12,6 @@ import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
-import org.apache.pdfbox.pdmodel.font.Standard14Fonts;
 
 import com.mysql.jdbc.Statement;
 
@@ -264,10 +263,13 @@ public class PersistanceSQL {
     }
 
     public void generationPDF30jours(){ 
+        System.out.println("qzzqdh");
         int nbjour = 30;
         ArrayList<Client> TousClient = recupererClientsPourRelance(nbjour);
         for(Client unClient : TousClient){
+            System.out.println(unClient.getNumClient());
             String dest = unClient.getRaisonSociale() + "Rappel30Jours.pdf";
+            System.out.println(dest);
             try (PDDocument document = new PDDocument()) {
                 PDPage page = new PDPage();
                 document.addPage(page);
@@ -277,10 +279,7 @@ public class PersistanceSQL {
                     // Début du texte
                     contentStream.beginText();
                     // Choisir la police et la taille
-                    PDType1Font HELVETICA = new PDType1Font(Standard14Fonts.FontName.HELVETICA);
-                    contentStream.setFont(HELVETICA, 12);
-                    PDType1Font HELVETICA = new PDType1Font(Standard14Fonts.FontName.HELVETICA);
-                    contentStream.setFont(HELVETICA,12);
+                    contentStream.setFont(PDType1Font.COURIER, 12);
                     // Déplacer le curseur à une position x, y
                     contentStream.newLineAtOffset(100, 700);
                     // Ajouter du texte

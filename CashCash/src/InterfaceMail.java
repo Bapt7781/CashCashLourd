@@ -53,6 +53,7 @@ public class InterfaceMail extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 afficherClients(30);
                 persistanceSQL.generationPDF30jours();
+                System.out.println("test");
             }
         });
 
