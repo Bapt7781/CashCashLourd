@@ -1,3 +1,4 @@
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 import java.sql.*;
 import java.util.Date;
 
@@ -29,8 +30,7 @@ public class GenerateurPDF {
                 String contenu = "Cher " + raisonSociale + "Nous vous rappelons que votre contrat de maintenance arrive à échéance. " +
                         "Merci de prendre les mesures nécessaires pour son renouvellement Cordialement,Votre société de maintenance";
 
-                // Envoi du courrier par e-mail
-                EmailSender.sendEmail(email, "Rappel de contrat de maintenance", contenu);
+                InterfaceMail.afficherInterface();
 
                 // Ajouter une pause pour éviter de surcharger le serveur de messagerie
                 Thread.sleep(1000);
@@ -44,3 +44,4 @@ public class GenerateurPDF {
         }
     }
 }
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

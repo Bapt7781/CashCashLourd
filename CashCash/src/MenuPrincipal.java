@@ -55,13 +55,20 @@ public class MenuPrincipal extends JPanel {
             }
         });
 
-        courriersBtn.addActionListener(new ActionListener() {
+        
+        contratMaintenanceBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(null, "Courriers automatiques générés.", "Succès",
-                        JOptionPane.INFORMATION_MESSAGE);
+                PersistanceSQL persistanceSQL = new PersistanceSQL("localhost", 3306, "cashcash");
+                SwingUtilities.invokeLater(new Runnable() {
+                    public void run() {
+                        new InterfaceMail(persistanceSQL);
+                    }
+                });
             }
         });
     }
+    
+    
 
     /**
      * Affiche le menu principal dans une fenêtre séparée.
