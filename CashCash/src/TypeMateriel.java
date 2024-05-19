@@ -10,6 +10,9 @@ public class TypeMateriel {
         this.laFamille = laFamille;
     }
 
+    public TypeMateriel() {
+    }
+
     // Getters et setters
     public String getReferenceInterne() {
         return referenceInterne;

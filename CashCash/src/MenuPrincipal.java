@@ -50,8 +50,12 @@ public class MenuPrincipal extends JPanel {
 
         contratMaintenanceBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(null, "Contrat de maintenance établi.", "Succès",
-                        JOptionPane.INFORMATION_MESSAGE);
+                PersistanceSQL persistanceSQL = new PersistanceSQL("localhost", 3306, "cashcash");
+                JFrame frame = new JFrame("Liste des Clients");
+                frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                frame.setSize(400, 300);
+                frame.setContentPane(new InterfaceListeClient(persistanceSQL));
+                frame.setVisible(true);
             }
         });
 

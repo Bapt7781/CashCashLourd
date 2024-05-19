@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE listeMateriel SYSTEM "./materielClient.dtd">
+<listeMateriel>
+<materiels idClient="18">
+<sousContrat>
+<materiel numSerie="2">
+<type refInterne="2" libelle="B302 - Écran tactile 15 pouces" />
+<famille codeFamille="B" libelle="Ecran" />
+<date_vente>Wed May 10 00:00:00 CEST 2023</date_vente>
+<date_installation>Fri May 12 00:00:00 CEST 2023</date_installation>
+<prix_vente>350.0</prix_vente>
+<emplacement>Bureau B102</emplacement>
+<date_echeance_contrat>Thu Nov 30 00:00:00 CET 2023</date_echeance_contrat>
+</materiel>
+<materiel numSerie="8">
+<type refInterne="3" libelle="C104 - Imprimante thermique" />
+<famille codeFamille="C" libelle="Imprimante" />
+<date_vente>Tue Aug 15 00:00:00 CEST 2023</date_vente>
+<date_installation>Sun Aug 20 00:00:00 CEST 2023</date_installation>
+<prix_vente>270.0</prix_vente>
+<emplacement>Bureau B103</emplacement>
+<date_echeance_contrat>Thu Nov 30 00:00:00 CET 2023</date_echeance_contrat>
+</materiel>
+</sousContrat>
+<horsContrat>
+</horsContrat>
+</materiels>
+</listeMateriel>
