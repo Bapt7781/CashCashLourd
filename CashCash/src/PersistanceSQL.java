@@ -278,15 +278,34 @@ public class PersistanceSQL {
                 try (PDPageContentStream contentStream = new PDPageContentStream(document, page)) {
                     // Début du texte
                     contentStream.beginText();
-                    // Choisir la police et la taille
-                    contentStream.setFont(PDType1Font.COURIER, 12);
+                    // Choisir la police et la taille pour la première ligne
+                    contentStream.setFont(PDType1Font.COURIER, 20);
                     // Déplacer le curseur à une position x, y
-                    contentStream.newLineAtOffset(100, 700);
-                    // Ajouter du texte
-                    contentStream.showText("Boujour " + unClient.getRaisonSociale()+ " Nous vous rapellons que votre contrat de maintenance arrive a échéance à la date du: " + unClient.getDateEcheance()+ " Merci de revenir vers nous pour renouveler votre contrat. Cordialement votre équipe d'assistance CashCash.");
+                    contentStream.newLineAtOffset(50, 700);
+                    contentStream.setLeading(14.5f);
+                    // Ajouter du texte pour la première ligne
+                    contentStream.showText("Boujour " + unClient.getRaisonSociale());
+                    // Retour à la ligne
+                    contentStream.newLine();
+                
+                    // Changer la police et la taille pour la deuxième ligne
+                    contentStream.setFont(PDType1Font.COURIER, 9);
+                    // Ajouter du texte pour la deuxième ligne
+                    contentStream.showText("Nous vous rappelons que votre contrat de maintenance arrive a échéance à la date du: " + unClient.getDateEcheance());
+                    // Retour à la ligne
+                    contentStream.newLine();
+                
+                    // Ajouter du texte pour la troisième ligne
+                    contentStream.showText("Merci de revenir vers nous pour renouveler votre contrat.");
+                    contentStream.newLine();
+
+                    contentStream.showText("Cordialement votre équipe d'assistance CashCash.");
+
+
                     // Fin du texte
                     contentStream.endText();
                 }
+                
                 
                 // Sauvegarder le document en tant que fichier PDF
                 document.save(dest);
