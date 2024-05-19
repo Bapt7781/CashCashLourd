@@ -38,7 +38,7 @@ public class InterfaceMail extends JPanel {
                 int nbjour = 30;
                 ArrayList<Client> TousClient = persistanceSQL.recupererClientsPourRelance(nbjour);
                 for(Client unClient : TousClient){
-
+                    
                 }
             }
         });
