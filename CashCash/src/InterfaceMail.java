@@ -14,54 +14,58 @@ public class InterfaceMail extends JPanel {
 
         // Menu avec les boutons
         JPanel menuPanel = new JPanel();
-        menuPanel.setLayout(new GridLayout(1, 3));
+        GridBagLayout gridBagLayout = new GridBagLayout();
+        menuPanel.setLayout(gridBagLayout);
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(10, 10, 10, 10); // padding
 
         JButton button30Days = new JButton("30 jours");
         JButton button15Days = new JButton("15 jours");
         JButton button3Days = new JButton("3 jours");
 
-        menuPanel.add(button30Days);
-        menuPanel.add(button15Days);
-        menuPanel.add(button3Days);
+        // Set preferred size for buttons to make them bigger
+        Dimension buttonSize = new Dimension(200, 50);
+        button30Days.setPreferredSize(buttonSize);
+        button15Days.setPreferredSize(buttonSize);
+        button3Days.setPreferredSize(buttonSize);
 
-        add(menuPanel, BorderLayout.NORTH);
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.anchor = GridBagConstraints.CENTER;
+        menuPanel.add(button30Days, gbc);
+
+        gbc.gridy = 1;
+        menuPanel.add(button15Days, gbc);
+
+        gbc.gridy = 2;
+        menuPanel.add(button3Days, gbc);
+
+        add(menuPanel, BorderLayout.CENTER);
 
         contenuArea = new JTextArea();
         contenuArea.setLineWrap(true);
         contenuArea.setWrapStyleWord(true);
         JScrollPane scrollPane = new JScrollPane(contenuArea);
-        add(scrollPane, BorderLayout.CENTER);
+        add(scrollPane, BorderLayout.SOUTH);
 
         button30Days.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int nbjour = 30;
-                ArrayList<Client> TousClient = persistanceSQL.recupererClientsPourRelance(nbjour);
-                for(Client unClient : TousClient){
-                    
-                }
+                afficherClients(30);
             }
         });
 
         button15Days.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int nbjour = 15;
-                ArrayList<Client> TousClient = persistanceSQL.recupererClientsPourRelance(nbjour);
-                for(Client unClient : TousClient){
-                    
-                }
+                afficherClients(15);
             }
         });
 
         button3Days.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int nbjour = 3;
-                ArrayList<Client> TousClient = persistanceSQL.recupererClientsPourRelance(nbjour);
-                for(Client unClient : TousClient){
-                    
-                }
+                afficherClients(3);
             }
         });
     }
