@@ -52,6 +52,7 @@ public class InterfaceMail extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 afficherClients(30);
+                persistanceSQL.generationPDF30jours();
             }
         });
 
