@@ -4,6 +4,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+
+import javax.swing.JOptionPane;
+
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
@@ -283,7 +286,8 @@ public class PersistanceSQL {
                 
                 // Sauvegarder le document en tant que fichier PDF
                 document.save(dest);
-                System.out.println("PDF créé à l'emplacement : " + dest);
+                JOptionPane.showMessageDialog(null, "Fichier PDF créer", "Succès",
+                    JOptionPane.INFORMATION_MESSAGE);
             }catch (Exception e) {
                 e.printStackTrace();
             }
