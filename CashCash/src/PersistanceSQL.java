@@ -308,12 +308,12 @@ public class PersistanceSQL {
                
                 // Sauvegarder le document en tant que fichier PDF
                 document.save(dest);
-                JOptionPane.showMessageDialog(null, "Fichier PDF créer", "Succès",
-                    JOptionPane.INFORMATION_MESSAGE);
             }catch (Exception e) {
                 e.printStackTrace();
             }
-        }
+        }                
+        JOptionPane.showMessageDialog(null, "Fichier(s) PDF créer", "Succès",
+        JOptionPane.INFORMATION_MESSAGE);
         }
         public void generationPDF15jours(){
             System.out.println("qzzqdh");
