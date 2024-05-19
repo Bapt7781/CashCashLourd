@@ -262,7 +262,6 @@ public class PersistanceSQL {
         return clients;
     }
     public void generationPDF30jours(){
-        System.out.println("qzzqdh");
         int nbjour = 30;
         ArrayList<Client> TousClient = recupererClientsPourRelance(nbjour);
         for(Client unClient : TousClient){
@@ -316,7 +315,6 @@ public class PersistanceSQL {
         JOptionPane.INFORMATION_MESSAGE);
         }
         public void generationPDF15jours(){
-            System.out.println("qzzqdh");
             int nbjour = 15;
             ArrayList<Client> TousClient = recupererClientsPourRelance(nbjour);
             for(Client unClient : TousClient){
@@ -370,7 +368,6 @@ public class PersistanceSQL {
             }
             }
             public void generationPDF3jours(){
-                System.out.println("qzzqdh");
                 int nbjour = 3;
                 ArrayList<Client> TousClient = recupererClientsPourRelance(nbjour);
                 for(Client unClient : TousClient){
