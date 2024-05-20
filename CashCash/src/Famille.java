@@ -1,6 +1,13 @@
 public class Famille {
-    private String codeFamille,libelleFamille;
-    
+    // Attributs
+    private String codeFamille, libelleFamille;
+
+    /**
+     * Constructeur avec paramètres de la classe Famille.
+     *
+     * @param codeFamille    Le code de la famille
+     * @param libelleFamille Le libellé de la famille
+     */
     public Famille(String codeFamille, String libelleFamille) {
         this.codeFamille = codeFamille;
         this.libelleFamille = libelleFamille;
@@ -22,4 +29,3 @@ public class Famille {
         this.libelleFamille = libelleFamille;
     }
 }
-

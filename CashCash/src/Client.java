@@ -37,7 +37,7 @@ public class Client {
     public Client() {
     }
 
-    // Getters pour les attributs
+    // Getters et Setters pour les attributs
     public String getNumClient() {
         return numClient;
     }

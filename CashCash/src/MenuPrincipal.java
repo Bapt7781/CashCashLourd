@@ -3,9 +3,15 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.IOException;
 
-// Cette classe affiche le menu principal après une authentification réussie
+/**
+ * Cette classe représente le menu principal affiché après une authentification
+ * réussie.
+ */
 public class MenuPrincipal extends JPanel {
-    // Constructeur
+    /**
+     * Constructeur de la classe MenuPrincipal.
+     * Initialise et affiche les composants du menu principal.
+     */
     public MenuPrincipal() {
         // Utilisation d'un BorderLayout
         setLayout(new BorderLayout());
@@ -59,22 +65,18 @@ public class MenuPrincipal extends JPanel {
             }
         });
 
-        
         courriersBtn.addActionListener(new ActionListener() {
-    public void actionPerformed(ActionEvent e) {
-        PersistanceSQL persistanceSQL = new PersistanceSQL("localhost", 3306, "cashcash");
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                InterfaceMail.afficherInterface(persistanceSQL);
+            public void actionPerformed(ActionEvent e) {
+                PersistanceSQL persistanceSQL = new PersistanceSQL("localhost", 3306, "cashcash");
+                SwingUtilities.invokeLater(new Runnable() {
+                    public void run() {
+                        InterfaceMail.afficherInterface(persistanceSQL);
+                    }
+                });
             }
         });
-    }
-});
 
-        
     }
-    
-    
 
     /**
      * Affiche le menu principal dans une fenêtre séparée.

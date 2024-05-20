@@ -4,26 +4,34 @@ import java.awt.event.*;
 import java.util.ArrayList;
 
 public class InterfaceMail extends JPanel {
+    // Attributs
     private PersistanceSQL persistanceSQL;
     private JTextArea contenuArea;
 
+    /**
+     * Constructeur de la classe InterfaceMail.
+     *
+     * @param persistanceSQL L'objet PersistanceSQL utilisé pour interagir avec la
+     *                       base de données
+     */
     public InterfaceMail(PersistanceSQL persistanceSQL) {
         this.persistanceSQL = persistanceSQL;
 
+        // Définition du layout de la JPanel
         setLayout(new BorderLayout());
 
-        // Menu avec les boutons
+        // Création du menu avec les boutons
         JPanel menuPanel = new JPanel();
         GridBagLayout gridBagLayout = new GridBagLayout();
         menuPanel.setLayout(gridBagLayout);
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(10, 10, 10, 10); // padding
+        gbc.insets = new Insets(10, 10, 10, 10); // Marge
 
         JButton button30Days = new JButton("30 jours");
         JButton button15Days = new JButton("15 jours");
         JButton button3Days = new JButton("3 jours");
 
-        // Set preferred size for buttons to make them bigger
+        // Définition de la taille préférée des boutons pour les rendre plus grands
         Dimension buttonSize = new Dimension(200, 50);
         button30Days.setPreferredSize(buttonSize);
         button15Days.setPreferredSize(buttonSize);
@@ -73,6 +81,12 @@ public class InterfaceMail extends JPanel {
         });
     }
 
+    // Méthode pour afficher les clients en fonction du nombre de jours
+    /**
+     * Affiche les clients pour une période spécifiée en jours.
+     *
+     * @param jours Le nombre de jours pour lesquels récupérer les clients
+     */
     private void afficherClients(int jours) {
         ArrayList<Client> clients = persistanceSQL.recupererClientsPourRelance(jours);
         StringBuilder contenu = new StringBuilder();
@@ -87,11 +101,14 @@ public class InterfaceMail extends JPanel {
     }
 
     /**
-     * Méthode statique pour afficher l'interface graphique.
+     * Méthode statique pour afficher l'interface graphique de l'envoi de mails.
+     *
+     * @param persistanceSQL L'objet PersistanceSQL utilisé pour interagir avec la
+     *                       base de données
      */
     public static void afficherInterface(PersistanceSQL persistanceSQL) {
         // Création de la fenêtre
-        JFrame frame = new JFrame("Interface d'affichage des clients");
+        JFrame frame = new JFrame("Interface d'envoi de mails");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(600, 400);
         frame.setContentPane(new InterfaceMail(persistanceSQL));

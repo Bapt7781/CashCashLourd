@@ -4,10 +4,18 @@ import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 
 public class ContratMaintenance {
+    // Attributs
     private String numContrat;
     private Date dateSignature, dateEcheance;
     private ArrayList<Materiel> lesMaterielsAssures = new ArrayList<>();
 
+    /**
+     * Constructeur avec paramètres de la classe ContratMaintenance.
+     *
+     * @param numContrat    Le numéro du contrat
+     * @param dateSignature La date de signature du contrat
+     * @param dateEcheance  La date d'échéance du contrat
+     */
     public ContratMaintenance(String numContrat, Date dateSignature, Date dateEcheance) {
         this.numContrat = numContrat;
         this.dateSignature = dateSignature;
@@ -15,13 +23,25 @@ public class ContratMaintenance {
         this.lesMaterielsAssures = new ArrayList<>();
     }
 
+    // Constructeur sans paramètre
     public ContratMaintenance() {
     }
 
+    /**
+     * Vérifie si le contrat contient un matériel spécifié.
+     *
+     * @param materiel Le matériel à vérifier
+     * @return true si le matériel est contenu dans le contrat, sinon false
+     */
     public boolean contientMateriel(Materiel materiel) {
         return lesMaterielsAssures.contains(materiel);
     }
 
+    /**
+     * Calcule le nombre de jours restants jusqu'à l'échéance du contrat.
+     *
+     * @return Le nombre de jours restants
+     */
     public int getJoursRestants() {
         // Conversion des dates SQL en LocalDate
         LocalDate now = LocalDate.now();
@@ -34,6 +54,11 @@ public class ContratMaintenance {
         return (int) joursRestants;
     }
 
+    /**
+     * Vérifie si le contrat est valide à la date actuelle.
+     *
+     * @return true si le contrat est valide, sinon false
+     */
     public boolean estValide() {
         // Conversion des dates SQL en LocalDate
         LocalDate now = LocalDate.now();
@@ -45,6 +70,11 @@ public class ContratMaintenance {
         return now.isAfter(signature) && now.isBefore(echeance);
     }
 
+    /**
+     * Ajoute un matériel au contrat de maintenance.
+     *
+     * @param unMateriel Le matériel à ajouter
+     */
     public void ajouteMateriel(Materiel unMateriel) {
         // Vérifier si la date de signature du contrat est antérieure ou égale à la date
         // d'installation du matériel
@@ -61,22 +91,19 @@ public class ContratMaintenance {
         }
     }
 
-    // Méthode pour obtenir le numéro de contrat
+    // Méthodes getters et setters
     public String getNumContrat() {
         return numContrat;
     }
 
-    // Méthode pour obtenir la date de signature
     public Date getDateSignature() {
         return dateSignature;
     }
 
-    // Méthode pour obtenir la date d'échéance
     public Date getDateEcheance() {
         return dateEcheance;
     }
 
-    // Méthode pour obtenir les matériels assurés
     public ArrayList<Materiel> getLesMaterielsAssures() {
         return lesMaterielsAssures;
     }
@@ -96,5 +123,4 @@ public class ContratMaintenance {
     public void setLesMaterielsAssures(ArrayList<Materiel> lesMaterielsAssures) {
         this.lesMaterielsAssures = lesMaterielsAssures;
     }
-
 }

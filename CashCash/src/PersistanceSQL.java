@@ -15,8 +15,17 @@ import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import com.mysql.jdbc.Statement;
 
 public class PersistanceSQL {
+
+    // attribut
     private final String URL;
 
+    /**
+     * Constructeur de la classe PersistanceSQL.
+     * 
+     * @param ipBase        L'adresse IP du serveur de base de données.
+     * @param port          Le port du serveur de base de données.
+     * @param nomBaseDonnee Le nom de la base de données.
+     */
     public PersistanceSQL(String ipBase, int port, String nomBaseDonnee) {
         this.URL = "jdbc:mysql://" + ipBase + ":" + port + "/" + nomBaseDonnee;
     }
@@ -26,6 +35,12 @@ public class PersistanceSQL {
         // (à implémenter selon vos besoins)
     }
 
+    /**
+     * Charge tous les clients depuis la base de données.
+     * 
+     * @return Une ArrayList contenant tous les clients chargés depuis la base de
+     *         données.
+     */
     public ArrayList<Client> chargerTousClients() {
         ArrayList<Client> clients = new ArrayList<>();
         String requeteSQL = "SELECT * FROM client";
@@ -57,6 +72,14 @@ public class PersistanceSQL {
         return clients;
     }
 
+    /**
+     * Récupère tous les matériels associés à un client spécifique depuis la base de
+     * données.
+     * 
+     * @param numeroClient Le numéro du client pour lequel récupérer les matériels.
+     * @return Une ArrayList contenant tous les matériels associés au client
+     *         spécifié.
+     */
     public ArrayList<Materiel> recupererMaterielsClient(String numeroClient) {
         ArrayList<Materiel> materiels = new ArrayList<>();
         String requeteSQL = "SELECT * FROM materiel WHERE NumeroClient = ?";
@@ -89,6 +112,11 @@ public class PersistanceSQL {
         return materiels;
     }
 
+    /**
+     * Charge tous les types de matériel depuis la base de données.
+     * 
+     * @return Une ArrayList contenant tous les types de matériel.
+     */
     public ArrayList<TypeMateriel> chargerTousTypesMateriel() {
         ArrayList<TypeMateriel> typesMateriel = new ArrayList<>();
         String requeteSQL = "SELECT * FROM typemateriel";
@@ -108,6 +136,15 @@ public class PersistanceSQL {
         return typesMateriel;
     }
 
+    /**
+     * Charge tous les matériels assurés associés à un contrat donné depuis la base
+     * de données.
+     * 
+     * @param numeroContrat Le numéro du contrat pour lequel charger les matériels
+     *                      assurés.
+     * @return Une ArrayList contenant tous les matériels assurés associés au
+     *         contrat donné.
+     */
     public ArrayList<Materiel> chargerMatérielsAssures(String numeroContrat) {
         ArrayList<Materiel> materielsAssures = new ArrayList<>();
         String requeteSQL = "SELECT * FROM Materiel WHERE NumeroDeContrat = ?";
@@ -141,6 +178,15 @@ public class PersistanceSQL {
         return materielsAssures;
     }
 
+    /**
+     * Charge un objet depuis la base de données en fonction de son identifiant et
+     * de sa classe.
+     * 
+     * @param id        L'identifiant de l'objet à charger.
+     * @param nomClasse Le nom de la classe de l'objet à charger.
+     * @return L'objet chargé depuis la base de données, ou null s'il n'est pas
+     *         trouvé.
+     */
     public Object chargerDepuisBase(int id, String nomClasse) {
         String requeteSQL = "";
         if (nomClasse == "Materiel") {
@@ -220,6 +266,13 @@ public class PersistanceSQL {
         }
     }
 
+    /**
+     * Associe un numéro de contrat à un matériel dans la base de données.
+     * 
+     * @param numContrat Le numéro de contrat à associer.
+     * @param numSerie   Le numéro de série du matériel auquel associer le numéro de
+     *                   contrat.
+     */
     public void ajouterNumeroContratAuMateriel(String numContrat, int numSerie) {
         String requeteSQL = "UPDATE materiel SET NumeroDeContrat = ? WHERE NumeroDeSerie = ?";
 
@@ -234,6 +287,15 @@ public class PersistanceSQL {
         }
     }
 
+    /**
+     * Récupère la liste des clients pour lesquels un rappel de relance doit être
+     * envoyé dans un certain nombre de jours.
+     * 
+     * @param jours Le nombre de jours avant l'échéance des contrats pour lesquels
+     *              envoyer un rappel.
+     * @return Une liste des clients pour lesquels un rappel de relance doit être
+     *         envoyé.
+     */
     public ArrayList<Client> recupererClientsPourRelance(int jours) {
         ArrayList<Client> clients = new ArrayList<>();
         String requeteSQL = "SELECT client.NumeroClient, client.RaisonSociale, client.Email, contratdemaintenance.DateEcheance "
@@ -262,6 +324,12 @@ public class PersistanceSQL {
         return clients;
     }
 
+    /**
+     * Génère des fichiers PDF de rappel pour les clients dont le contrat de
+     * maintenance arrive à échéance dans 30 jours.
+     * Les fichiers PDF contiennent un message de rappel personnalisé pour chaque
+     * client.
+     */
     public void generationPDF30jours() {
         int nbjour = 30;
         ArrayList<Client> TousClient = recupererClientsPourRelance(nbjour);
@@ -321,6 +389,12 @@ public class PersistanceSQL {
         }
     }
 
+    /**
+     * Génère des fichiers PDF de rappel pour les clients dont le contrat de
+     * maintenance arrive à échéance dans 15 jours.
+     * Les fichiers PDF contiennent un message de rappel personnalisé pour chaque
+     * client.
+     */
     public void generationPDF15jours() {
         int nbjour = 15;
         ArrayList<Client> TousClient = recupererClientsPourRelance(nbjour);
@@ -380,6 +454,12 @@ public class PersistanceSQL {
         }
     }
 
+    /**
+     * Génère des fichiers PDF de rappel pour les clients dont le contrat de
+     * maintenance arrive à échéance dans 3 jours.
+     * Les fichiers PDF contiennent un message de rappel personnalisé pour chaque
+     * client.
+     */
     public void generationPDF3jours() {
         int nbjour = 3;
         ArrayList<Client> TousClient = recupererClientsPourRelance(nbjour);

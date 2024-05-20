@@ -4,8 +4,15 @@ import java.awt.event.*;
 import java.util.ArrayList;
 
 public class InterfaceListeClient extends JPanel {
+    // Attribut
     private PersistanceSQL persistanceSQL;
 
+    /**
+     * Constructeur de la classe InterfaceListeClient.
+     *
+     * @param persistanceSQL L'objet PersistanceSQL utilisé pour charger les clients
+     *                       depuis la base de données
+     */
     public InterfaceListeClient(PersistanceSQL persistanceSQL) {
         this.persistanceSQL = persistanceSQL;
 

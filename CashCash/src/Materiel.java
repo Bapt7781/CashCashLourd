@@ -13,6 +13,7 @@ import org.xml.sax.SAXParseException;
 import org.xml.sax.helpers.DefaultHandler;
 
 public class Materiel {
+    // Attributs
     private int numSerie, numClient;
     private Date dateVente, dateInstallation, dateEcheanceContrat;
     private double prixVente;
@@ -23,6 +24,18 @@ public class Materiel {
     private static final String UTILISATEUR = "root";
     private static final String MOT_DE_PASSE = "";
 
+    /**
+     * Constructeur avec paramètres pour initialiser un objet Materiel.
+     *
+     * @param numSerie            Le numéro de série du matériel.
+     * @param dateVente           La date de vente du matériel.
+     * @param dateInstallation    La date d'installation du matériel.
+     * @param dateEcheanceContrat La date d'échéance du contrat de maintenance du
+     *                            matériel.
+     * @param prixVente           Le prix de vente du matériel.
+     * @param emplacement         L'emplacement du matériel.
+     * @param leType              Le type de matériel.
+     */
     public Materiel(int numSerie, Date dateVente, Date dateInstallation, Date dateEcheanceContrat, double prixVente,
             String emplacement, TypeMateriel leType) {
         this.numSerie = numSerie;
@@ -34,10 +47,20 @@ public class Materiel {
         this.leType = leType;
     }
 
+    /**
+     * Constructeur par défaut qui initialise un objet Materiel.
+     *
+     * @throws IOException en cas d'erreur d'entrée/sortie
+     */
     public Materiel() throws IOException {
         xmlMateriel();
     }
 
+    /**
+     * Constructeur prenant uniquement le numéro de série du matériel.
+     *
+     * @param numSeriee Le numéro de série du matériel.
+     */
     public Materiel(int numSeriee) {
         this.numSerie = numSeriee;
     }
@@ -104,6 +127,13 @@ public class Materiel {
         this.numClient = numClient;
     }
 
+    /**
+     * Récupère les informations des matériels à partir d'un fichier XML.
+     *
+     * @return Une liste de listes de matériels, où la première liste contient les
+     *         matériels sous contrat et la deuxième liste contient les matériels
+     *         hors contrat.
+     */
     public ArrayList<ArrayList<Materiel>> recuperationInformationXML() {
         String numClient = JOptionPane.showInputDialog(null, "Numéro du Client :");
         setNumClient(Integer.parseInt(numClient));
@@ -191,6 +221,12 @@ public class Materiel {
         return listeMateriels;
     }
 
+    /**
+     * Génère un fichier XML contenant les informations sur les matériels du
+     * client et vérifie sa validité par rapport à une DTD.
+     *
+     * @throws IOException en cas d'erreur d'entrée/sortie
+     */
     public void xmlMateriel() throws IOException {
         ArrayList<ArrayList<Materiel>> listeMateriels = recuperationInformationXML();
         ArrayList<Materiel> listeMaterielsSousContrat = listeMateriels.get(0);
@@ -247,6 +283,13 @@ public class Materiel {
         }
     }
 
+    /**
+     * Valide un fichier XML par rapport à une DTD.
+     *
+     * @param documentXML Le chemin vers le document XML à valider.
+     * @param dtdPath     Le chemin vers la DTD à utiliser pour la validation.
+     * @return true si le document XML est valide, sinon false.
+     */
     public static boolean validerXmlAvecDtd(String documentXML, String dtdPath) {
         try {
             // Instanciation d'une factory d'analyseurs SAX
