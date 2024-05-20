@@ -6,9 +6,9 @@ import java.sql.*;
  */
 public class Authentificateur {
 
-    private static final String URL = "jdbc:mysql://localhost/cashcash";
-    private static final String UTILISATEUR = "root";
-    private static final String MOT_DE_PASSE = "";
+    private static final String url = "jdbc:mysql://localhost/cashcash";
+    private static final String utilisateur = "root";
+    private static final String motDePasse = "";
 
     /**
      * Authentifie l'utilisateur en vérifiant les identifiants dans la base de
@@ -50,12 +50,12 @@ public class Authentificateur {
      * @return true si l'authentification est réussie, sinon false
      * @throws SQLException en cas d'erreur de base de données
      */
-    private boolean validerConnexion(String nomUtilisateur, String motDePasse) throws SQLException {
+    private boolean validerConnexion(String nomUtilisateur, String mdp) throws SQLException {
         String requeteSQL = "SELECT * FROM employe WHERE NomEmploye = ? AND MotDePasse = SHA2(?, 256)";
-        try (Connection connexion = DriverManager.getConnection(URL, UTILISATEUR, MOT_DE_PASSE);
+        try (Connection connexion = DriverManager.getConnection(url, utilisateur, motDePasse);
                 PreparedStatement statement = connexion.prepareStatement(requeteSQL)) {
             statement.setString(1, nomUtilisateur);
-            statement.setString(2, motDePasse);
+            statement.setString(2, mdp);
             ResultSet resultSet = statement.executeQuery();
             return resultSet.next();
         }
