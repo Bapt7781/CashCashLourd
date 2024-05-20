@@ -233,12 +233,14 @@ public class PersistanceSQL {
             e.printStackTrace();
         }
     }
+
     public ArrayList<Client> recupererClientsPourRelance(int jours) {
         ArrayList<Client> clients = new ArrayList<>();
-        String requeteSQL = "SELECT client.NumeroClient, client.RaisonSociale, client.Email, contratdemaintenance.DateEcheance " +
-                            "FROM client " +
-                            "JOIN contratdemaintenance ON client.NumeroClient = contratdemaintenance.NumeroClient " +
-                            "WHERE contratdemaintenance.DateEcheance = DATE_ADD(CURDATE(), INTERVAL ? DAY)";
+        String requeteSQL = "SELECT client.NumeroClient, client.RaisonSociale, client.Email, contratdemaintenance.DateEcheance "
+                +
+                "FROM client " +
+                "JOIN contratdemaintenance ON client.NumeroClient = contratdemaintenance.NumeroClient " +
+                "WHERE contratdemaintenance.DateEcheance = DATE_ADD(CURDATE(), INTERVAL ? DAY)";
 
         try (Connection connexion = DriverManager.getConnection(URL, "root", "");
                 PreparedStatement statement = connexion.prepareStatement(requeteSQL)) {
@@ -259,17 +261,18 @@ public class PersistanceSQL {
         }
         return clients;
     }
-    public void generationPDF30jours(){
+
+    public void generationPDF30jours() {
         int nbjour = 30;
         ArrayList<Client> TousClient = recupererClientsPourRelance(nbjour);
-        for(Client unClient : TousClient){
+        for (Client unClient : TousClient) {
             System.out.println(unClient.getNumClient());
             String dest = unClient.getRaisonSociale() + "Rappel30Jours.pdf";
             System.out.println(dest);
             try (PDDocument document = new PDDocument()) {
                 PDPage page = new PDPage();
                 document.addPage(page);
-               
+
                 // Création d'un flux de contenu pour la page
                 try (PDPageContentStream contentStream = new PDPageContentStream(document, page)) {
                     // Début du texte
@@ -283,139 +286,156 @@ public class PersistanceSQL {
                     contentStream.showText("Boujour " + unClient.getRaisonSociale());
                     // Retour à la ligne
                     contentStream.newLine();
-               
+
                     // Changer la police et la taille pour la deuxième ligne
                     contentStream.setFont(PDType1Font.COURIER, 9);
                     // Ajouter du texte pour la deuxième ligne
-                    contentStream.showText("Nous vous rappelons que votre contrat de maintenance arrive a échéance à la date du: " + unClient.getDateEcheance());
+                    contentStream.showText(
+                            "Nous vous rappelons que votre contrat de maintenance arrive a échéance à la date du: "
+                                    + unClient.getDateEcheance());
                     // Retour à la ligne
                     contentStream.newLine();
-               
+
                     // Ajouter du texte pour la troisième ligne
                     contentStream.showText("Merci de revenir vers nous pour renouveler votre contrat.");
                     contentStream.newLine();
- 
+
                     contentStream.showText("Cordialement votre équipe d'assistance CashCash.");
- 
- 
+
                     // Fin du texte
                     contentStream.endText();
                 }
-               
-               
+
                 // Sauvegarder le document en tant que fichier PDF
                 document.save(dest);
-            }catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Fichier(s) PDF créer", "Succès",
+                        JOptionPane.INFORMATION_MESSAGE);
+            } catch (Exception e) {
                 e.printStackTrace();
             }
-        }                
-        JOptionPane.showMessageDialog(null, "Fichier(s) PDF créer", "Succès",
-        JOptionPane.INFORMATION_MESSAGE);
         }
-        public void generationPDF15jours(){
-            int nbjour = 15;
-            ArrayList<Client> TousClient = recupererClientsPourRelance(nbjour);
-            for(Client unClient : TousClient){
-                System.out.println(unClient.getNumClient());
-                String dest = unClient.getRaisonSociale() + "Rappel30Jours.pdf";
-                System.out.println(dest);
-                try (PDDocument document = new PDDocument()) {
-                    PDPage page = new PDPage();
-                    document.addPage(page);
-                   
-                    // Création d'un flux de contenu pour la page
-                    try (PDPageContentStream contentStream = new PDPageContentStream(document, page)) {
-                        // Début du texte
-                        contentStream.beginText();
-                        // Choisir la police et la taille pour la première ligne
-                        contentStream.setFont(PDType1Font.COURIER, 20);
-                        // Déplacer le curseur à une position x, y
-                        contentStream.newLineAtOffset(50, 700);
-                        contentStream.setLeading(14.5f);
-                        // Ajouter du texte pour la première ligne
-                        contentStream.showText("Boujour " + unClient.getRaisonSociale());
-                        // Retour à la ligne
-                        contentStream.newLine();
-                   
-                        // Changer la police et la taille pour la deuxième ligne
-                        contentStream.setFont(PDType1Font.COURIER, 9);
-                        // Ajouter du texte pour la deuxième ligne
-                        contentStream.showText("Nous vous rappelons que votre contrat de maintenance arrive a échéance à la date du: " + unClient.getDateEcheance());
-                        // Retour à la ligne
-                        contentStream.newLine();
-                   
-                        // Ajouter du texte pour la troisième ligne
-                        contentStream.showText("Merci de revenir vers nous pour renouveler votre contrat.");
-                        contentStream.newLine();
-     
-                        contentStream.showText("Cordialement votre équipe d'assistance CashCash.");
-     
-     
-                        // Fin du texte
-                        contentStream.endText();
-                    }
-                   
-                   
-                    // Sauvegarder le document en tant que fichier PDF
-                    document.save(dest);
-                    JOptionPane.showMessageDialog(null, "Fichier PDF créer", "Succès",
+        if (TousClient.size() == 0) {
+            JOptionPane.showMessageDialog(null,
+                    "Aucun fichier PDF créé, car aucun contrat de maintenance ne se termine dans 30 jours.", "Alert",
+                    JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
+
+    public void generationPDF15jours() {
+        int nbjour = 15;
+        ArrayList<Client> TousClient = recupererClientsPourRelance(nbjour);
+        for (Client unClient : TousClient) {
+            System.out.println(unClient.getNumClient());
+            String dest = unClient.getRaisonSociale() + "Rappel30Jours.pdf";
+            System.out.println(dest);
+            try (PDDocument document = new PDDocument()) {
+                PDPage page = new PDPage();
+                document.addPage(page);
+
+                // Création d'un flux de contenu pour la page
+                try (PDPageContentStream contentStream = new PDPageContentStream(document, page)) {
+                    // Début du texte
+                    contentStream.beginText();
+                    // Choisir la police et la taille pour la première ligne
+                    contentStream.setFont(PDType1Font.COURIER, 20);
+                    // Déplacer le curseur à une position x, y
+                    contentStream.newLineAtOffset(50, 700);
+                    contentStream.setLeading(14.5f);
+                    // Ajouter du texte pour la première ligne
+                    contentStream.showText("Boujour " + unClient.getRaisonSociale());
+                    // Retour à la ligne
+                    contentStream.newLine();
+
+                    // Changer la police et la taille pour la deuxième ligne
+                    contentStream.setFont(PDType1Font.COURIER, 9);
+                    // Ajouter du texte pour la deuxième ligne
+                    contentStream.showText(
+                            "Nous vous rappelons que votre contrat de maintenance arrive a échéance à la date du: "
+                                    + unClient.getDateEcheance());
+                    // Retour à la ligne
+                    contentStream.newLine();
+
+                    // Ajouter du texte pour la troisième ligne
+                    contentStream.showText("Merci de revenir vers nous pour renouveler votre contrat.");
+                    contentStream.newLine();
+
+                    contentStream.showText("Cordialement votre équipe d'assistance CashCash.");
+
+                    // Fin du texte
+                    contentStream.endText();
+                }
+
+                // Sauvegarder le document en tant que fichier PDF
+                document.save(dest);
+                JOptionPane.showMessageDialog(null, "Fichier PDF créer", "Succès",
                         JOptionPane.INFORMATION_MESSAGE);
-                }catch (Exception e) {
-                    e.printStackTrace();
-                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
+        }
+        if (TousClient.size() == 0) {
+            JOptionPane.showMessageDialog(null,
+                    "Aucun fichier PDF créé, car aucun contrat de maintenance ne se termine dans 15 jours.", "Alert",
+                    JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
+
+    public void generationPDF3jours() {
+        int nbjour = 3;
+        ArrayList<Client> TousClient = recupererClientsPourRelance(nbjour);
+        for (Client unClient : TousClient) {
+            System.out.println(unClient.getNumClient());
+            String dest = unClient.getRaisonSociale() + "Rappel30Jours.pdf";
+            System.out.println(dest);
+            try (PDDocument document = new PDDocument()) {
+                PDPage page = new PDPage();
+                document.addPage(page);
+
+                // Création d'un flux de contenu pour la page
+                try (PDPageContentStream contentStream = new PDPageContentStream(document, page)) {
+                    // Début du texte
+                    contentStream.beginText();
+                    // Choisir la police et la taille pour la première ligne
+                    contentStream.setFont(PDType1Font.COURIER, 20);
+                    // Déplacer le curseur à une position x, y
+                    contentStream.newLineAtOffset(50, 700);
+                    contentStream.setLeading(14.5f);
+                    // Ajouter du texte pour la première ligne
+                    contentStream.showText("Boujour " + unClient.getRaisonSociale());
+                    // Retour à la ligne
+                    contentStream.newLine();
+
+                    // Changer la police et la taille pour la deuxième ligne
+                    contentStream.setFont(PDType1Font.COURIER, 9);
+                    // Ajouter du texte pour la deuxième ligne
+                    contentStream.showText(
+                            "Nous vous rappelons que votre contrat de maintenance arrive a échéance à la date du: "
+                                    + unClient.getDateEcheance());
+                    // Retour à la ligne
+                    contentStream.newLine();
+
+                    // Ajouter du texte pour la troisième ligne
+                    contentStream.showText("Merci de revenir vers nous pour renouveler votre contrat.");
+                    contentStream.newLine();
+
+                    contentStream.showText("Cordialement votre équipe d'assistance CashCash.");
+
+                    // Fin du texte
+                    contentStream.endText();
+                }
+
+                // Sauvegarder le document en tant que fichier PDF
+                document.save(dest);
+                JOptionPane.showMessageDialog(null, "Fichier PDF créer", "Succès",
+                        JOptionPane.INFORMATION_MESSAGE);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-            public void generationPDF3jours(){
-                int nbjour = 3;
-                ArrayList<Client> TousClient = recupererClientsPourRelance(nbjour);
-                for(Client unClient : TousClient){
-                    System.out.println(unClient.getNumClient());
-                    String dest = unClient.getRaisonSociale() + "Rappel30Jours.pdf";
-                    System.out.println(dest);
-                    try (PDDocument document = new PDDocument()) {
-                        PDPage page = new PDPage();
-                        document.addPage(page);
-                       
-                        // Création d'un flux de contenu pour la page
-                        try (PDPageContentStream contentStream = new PDPageContentStream(document, page)) {
-                            // Début du texte
-                            contentStream.beginText();
-                            // Choisir la police et la taille pour la première ligne
-                            contentStream.setFont(PDType1Font.COURIER, 20);
-                            // Déplacer le curseur à une position x, y
-                            contentStream.newLineAtOffset(50, 700);
-                            contentStream.setLeading(14.5f);
-                            // Ajouter du texte pour la première ligne
-                            contentStream.showText("Boujour " + unClient.getRaisonSociale());
-                            // Retour à la ligne
-                            contentStream.newLine();
-                       
-                            // Changer la police et la taille pour la deuxième ligne
-                            contentStream.setFont(PDType1Font.COURIER, 9);
-                            // Ajouter du texte pour la deuxième ligne
-                            contentStream.showText("Nous vous rappelons que votre contrat de maintenance arrive a échéance à la date du: " + unClient.getDateEcheance());
-                            // Retour à la ligne
-                            contentStream.newLine();
-                       
-                            // Ajouter du texte pour la troisième ligne
-                            contentStream.showText("Merci de revenir vers nous pour renouveler votre contrat.");
-                            contentStream.newLine();
-         
-                            contentStream.showText("Cordialement votre équipe d'assistance CashCash.");
-         
-         
-                            // Fin du texte
-                            contentStream.endText();
-                        }
-                       
-                       
-                        // Sauvegarder le document en tant que fichier PDF
-                        document.save(dest);
-                        JOptionPane.showMessageDialog(null, "Fichier PDF créer", "Succès",
-                            JOptionPane.INFORMATION_MESSAGE);
-                    }catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-                }
+        }
+        if (TousClient.size() == 0) {
+            JOptionPane.showMessageDialog(null,
+                    "Aucun fichier PDF créé, car aucun contrat de maintenance ne se termine dans 3 jours.", "Alert",
+                    JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
 }
